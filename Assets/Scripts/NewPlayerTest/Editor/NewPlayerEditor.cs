@@ -17,7 +17,7 @@ public class NewPlayerEditor:Editor
 
     public override void OnInspectorGUI()
     {
-        base.OnInspectorGUI();
+        base.DrawDefaultInspector();
         npg = (NewPlayerGuide) target;
         npg.target=EditorGUILayout.ObjectField("TargetRectTrans",npg.target,typeof(RectTransform),true) as RectTransform;
         npg.RadusSlider = EditorGUILayout.Slider("Mask Radus", npg.RadusSlider, 0, 1000);
@@ -52,7 +52,6 @@ public class NewPlayerEditor:Editor
  
         Vector3 center = new Vector3 (x, y, 0f);
         Vector2 position = WordToCanvasPos(canvas,center);
-         Debug.Log(npg.name);
         if (npg.material == null)
         {
             npg.material=Resources.Load<Material>("UI-Default_Mask");

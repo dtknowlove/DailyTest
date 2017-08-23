@@ -1,3 +1,12 @@
+## Common
+
+* Unity version:5.5.1p4
+
+## New Player Mask
+
+* 右键添加NewPlayerGuide
+* 选择一个要显示的Target，调整Radus大小来调节圆圈。
+
 ## Free Style
 
 * Window:LLL/FreeStyleWindow

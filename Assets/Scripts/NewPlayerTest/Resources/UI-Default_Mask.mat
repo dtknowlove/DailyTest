@@ -108,7 +108,7 @@ Material:
       second: 0.02
     - first:
         name: _Silder
-      second: 100
+      second: 208
     - first:
         name: _SmoothnessTextureChannel
       second: 0
@@ -145,7 +145,7 @@ Material:
     m_Colors:
     - first:
         name: _Center
-      second: {r: -57479.5, g: 57240.5, b: 0, a: 0}
+      second: {r: 0, g: 0, b: 0, a: 0}
     - first:
         name: _Color
       second: {r: 0.007352948, g: 0.007352948, b: 0.007352948, a: 1}
