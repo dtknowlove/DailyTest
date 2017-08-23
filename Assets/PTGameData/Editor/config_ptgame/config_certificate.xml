@@ -1,0 +1,19 @@
+<config>
+  
+  <!--  包名等设置 -->
+  <certificate>
+     <device bundlename="com.putao.theocean.cn">
+        <codesign>"iPhone Developer: dahu wang (ZGB4X38AB2)"</codesign>
+        <provisioning>"5f4df937-739c-4b05-be83-743636050bf2"</provisioning>
+       </device>
+    <appstore bundlename="com.putao.theocean">
+      <codesign>"iPhone Distribution: Shanghai Putao Technology Co., Ltd. (C6SC3439YS)"</codesign>
+      <provisioning>"8e0f5e0c-58d8-4390-bbb7-907f0555492b"</provisioning>
+    </appstore>
+    <firm bundlename="com.putao.theocean.cn">
+      <codesign>"iPhone Distribution: Shanghai Putao Technology Co., Ltd."</codesign>
+      <provisioning>"4efef61b-d4a7-4a8d-9872-eb9ba3f04969"</provisioning>
+    </firm>
+    </certificate>
+  
+</config>
