@@ -136,10 +136,10 @@ public class ETestWindowEditor : EditorWindow
 		}
 		FileInfo fi=new FileInfo(path);
 		StreamWriter sw = fi.CreateText();
-		Debug.Log(resultStr);
 		sw.WriteLine(resultStr.TrimEnd());
 		sw.Close();
 		sw.Dispose();
+		Debug.Log(path+" Complete!");
 	}
 
 	void OnDestroy()
