@@ -1,0 +1,11 @@
+HeroAndSoldierData.lll
+TestJson.json
+TestPortoBuf.protobuf
+TestProtoBuf.bin
+*.sln
+*.csproj
+Library/
+obj/
+Temp/
+XCode_Unity/
+.idea/
