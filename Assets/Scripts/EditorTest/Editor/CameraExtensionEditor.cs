@@ -1,8 +1,7 @@
 ﻿///
 ///拓展系统自带组件的Inspector
 ///
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEditor;
 using UnityEngine;
 

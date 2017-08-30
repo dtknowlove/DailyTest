@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
-
 
 [CustomEditor(typeof(ETest))]
 public class ETestEditor :Editor 

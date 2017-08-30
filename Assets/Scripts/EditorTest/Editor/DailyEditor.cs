@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
-using UnityEditorInternal;
 
 public class DailyEditor
 {
@@ -12,7 +9,6 @@ public class DailyEditor
 	[MenuItem ("LLL/Merge Collider")]
 	static void MergeCollider () 
 	{
-//		InternalEditorUtility
 		Transform parent = 	Selection.activeGameObject.transform;
 		Vector3 postion = parent.position;
 		Quaternion rotation = parent.rotation;
@@ -111,5 +107,25 @@ public class DailyEditor
 			else if(path.EndsWith(""))
 				GUILayout.Button("我是文件夹！");
 		}
+	}
+
+//	public class ShortCutKey : Editor
+//	{
+//		public override void OnInspectorGUI()
+//		{
+//			base.DrawDefaultInspector();
+//			if (Input.GetKeyDown(KeyCode.LeftCommand) && Input.GetKeyDown(KeyCode.J))
+//			{
+//				Debug.Log("lallala");
+//				EditorApplication.ExecuteMenuItem("Window/Editor Tests Runner");
+//			}
+//		}
+//	}
+
+	[MenuItem("LLL/Restart %#n")]
+	static void OpenOtherItem()
+	{
+//		EditorApplication.OpenProject(Application.dataPath+"/../");
+		EditorApplication.ExecuteMenuItem("Window/Editor Tests Runner");
 	}
 }

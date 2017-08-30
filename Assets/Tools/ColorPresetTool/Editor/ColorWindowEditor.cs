@@ -25,7 +25,7 @@ public class ColorWindowEditor : EditorWindow
 	string colorName = "default";
 	string suffix = ".colors";
 	
-	[MenuItem("LLL/Tool/ColorPresetWindow",false,2)]
+	[MenuItem("LLL/Tools/ColorPresetWindow",false,2)]
 	static void ColorWindow()
 	{
 		Rect windowRect=new Rect(0,0,540,350);

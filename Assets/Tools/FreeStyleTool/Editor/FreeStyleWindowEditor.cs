@@ -1,32 +1,52 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-public class ETestWindowEditor : EditorWindow
+//[InitializeOnLoad]
+public class FreeStyleWindowEditor : EditorWindow
 {
 	private const string IMAGE_KEY = "IMAGE_KEY";
 	private const string SCRIPT_KEY = "SCRIPT_KEY";
-	private static string defaultPath = "";
+	private const string UPDATEICON_KEY = "UPDATEICON_KEY";
+	private static string defaultScriptsPath = "";
+	private static string defaultIconPath = "";
 	private static string mPngMetaPath="";
 	private static string mCsPath = "";
+//	private static bool mUpdateIcon = false;
 	
-	[MenuItem("LLL/Tool/FreeStyleWindow",false,1)]
+//	static FreeStyleWindowEditor()
+//	{
+//		defaultScriptsPath = Application.dataPath + "/Scripts/";
+//		defaultIconPath = Application.dataPath + "/Tools/FreeStyleTool/Res/icon.png";
+//		mPngMetaPath = PlayerPrefs.GetString(IMAGE_KEY,defaultIconPath);
+//		mCsPath = PlayerPrefs.GetString(SCRIPT_KEY,defaultScriptsPath);
+//		if (EditorPrefs.GetBool(UPDATEICON_KEY, true))
+//			UpdateIcon(mPngMetaPath, mCsPath);
+//		else
+//			UpdateIcon(mPngMetaPath,mCsPath,true);
+//	}
+
+	[MenuItem("LLL/Tools/FreeStyleWindow",false,1)]
 	static void TestWindow()
 	{
 		Rect windowRect=new Rect(0,0,500,300);
-		ETestWindowEditor myWindow =
-			(ETestWindowEditor) EditorWindow.GetWindowWithRect(typeof(ETestWindowEditor), windowRect,true, "Script Free Style");
+		FreeStyleWindowEditor myWindow =
+			(FreeStyleWindowEditor) EditorWindow.GetWindowWithRect(typeof(FreeStyleWindowEditor), windowRect,true, "Script Free Style");
 		myWindow.Show();
 	}
 
+//	private void OnEnable()
+//	{
+//		mUpdateIcon = EditorPrefs.GetBool(UPDATEICON_KEY, false);
+//	}
+
 	void Awake()
 	{
-		defaultPath = Application.dataPath + "/Scripts/";
-		mPngMetaPath = PlayerPrefs.GetString(IMAGE_KEY);
-		mCsPath = PlayerPrefs.GetString(SCRIPT_KEY);
+		defaultScriptsPath = Application.dataPath + "/Scripts/";
+		defaultIconPath = Application.dataPath + "/Tools/FreeStyleTool/Res/icon.png";
+		mPngMetaPath = PlayerPrefs.GetString(IMAGE_KEY,defaultIconPath);
+		mCsPath = PlayerPrefs.GetString(SCRIPT_KEY,defaultScriptsPath);
 	}
 
 	//绘制窗口时调用
@@ -41,43 +61,52 @@ public class ETestWindowEditor : EditorWindow
 		GUILayout.Label("Free Style");
 		GUI.skin.label.fontSize = 12;
 		GUILayout.Space(10);
-		
+		//icon
 		EditorGUILayout.BeginHorizontal();
 		EditorGUILayout.LabelField("请输入图片路径:",GUILayout.Width(100));
 		EditorGUILayout.TextField(mPngMetaPath,GUILayout.Width(300));
 		if (GUILayout.Button("+",GUILayout.Width(30),GUILayout.Height(15)))
 		{
-			mPngMetaPath = EditorUtility.OpenFilePanelWithFilters("请选择一张图片", defaultPath, new string[] {"Image Files", "png"});
+			mPngMetaPath = EditorUtility.OpenFilePanelWithFilters("请选择一张图片", defaultIconPath, new string[] {"Image Files", "png"});
 			PlayerPrefs.SetString(IMAGE_KEY,mPngMetaPath);
 		}
 		EditorGUILayout.EndHorizontal();
+		//scripts
 		EditorGUILayout.BeginHorizontal();
 		EditorGUILayout.LabelField("请输入脚本路径:",GUILayout.Width(100));
 		EditorGUILayout.TextField(mCsPath,GUILayout.Width(300));
 		if (GUILayout.Button("+",GUILayout.Width(30),GUILayout.Height(15)))
 		{
-			mCsPath = EditorUtility.OpenFolderPanel("请选择一个文件", defaultPath,"Scripts");
+			mCsPath = EditorUtility.OpenFolderPanel("请选择一个文件", defaultScriptsPath,"Scripts");
 //			mCsPath = EditorUtility.OpenFilePanelWithFilters("请选择一个文件", defaultPath, new string[] {"Script Files", "cs"});
 			PlayerPrefs.SetString(SCRIPT_KEY,mCsPath);
 		}
 		EditorGUILayout.EndHorizontal();
-		
+		//button
 		EditorGUILayout.BeginHorizontal();
 		if(GUILayout.Button("更新Icon",GUILayout.Height(20)))
 		{
 			UpdateIcon(mPngMetaPath,mCsPath);
+			EditorPrefs.SetBool(UPDATEICON_KEY,true);
 		}
 		if(GUILayout.Button("恢复Icon",GUILayout.Height(20)))
 		{
 			UpdateIcon(mPngMetaPath,mCsPath,true);
+			EditorPrefs.SetBool(UPDATEICON_KEY,false);
 		}
 		EditorGUILayout.EndHorizontal();
 	}
 
-	void UpdateIcon(string pngMetaFile,string csDirectory,bool isReset=false)
+	void OnDestroy()
+	{
+		PlayerPrefs.SetString(IMAGE_KEY,mPngMetaPath);
+		PlayerPrefs.SetString(SCRIPT_KEY,mCsPath);
+	}
+
+	static void UpdateIcon(string pngMetaFile,string csDirectory,bool isReset=false)
 	{
 		pngMetaFile = pngMetaFile + ".meta";
-		Debug.Log(Directory.Exists(csDirectory));
+//		Debug.Log(Directory.Exists(csDirectory));
 		if (!File.Exists(pngMetaFile) || !Directory.Exists(csDirectory))
 		{
 			Debug.LogWarning("The path is not exit!");
@@ -92,7 +121,7 @@ public class ETestWindowEditor : EditorWindow
 		AssetDatabase.Refresh();
 	}
 
-	string GetImageMetaGUID(string path)
+	static string GetImageMetaGUID(string path)
 	{
 		if(!File.Exists(path))
 			return "";
@@ -108,11 +137,11 @@ public class ETestWindowEditor : EditorWindow
 				break;
 			}
 		}
-		Debug.Log(iconGUID);
+//		Debug.Log(iconGUID);
 		return iconGUID;
 	}
 	
-	void UpdateCsMetaFile(string path,string guid,bool isReset=false)
+	static void UpdateCsMetaFile(string path,string guid,bool isReset=false)
 	{
 		if(!File.Exists(path))
 			return;
@@ -139,12 +168,6 @@ public class ETestWindowEditor : EditorWindow
 		sw.WriteLine(resultStr.TrimEnd());
 		sw.Close();
 		sw.Dispose();
-		Debug.Log(path+" Complete!");
-	}
-
-	void OnDestroy()
-	{
-		PlayerPrefs.SetString(IMAGE_KEY,mPngMetaPath);
-		PlayerPrefs.SetString(SCRIPT_KEY,mCsPath);
+//		Debug.Log(path+" Complete!");
 	}
 }
