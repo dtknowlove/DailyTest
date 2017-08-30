@@ -28,9 +28,8 @@ public class ColorWindowEditor : EditorWindow
 	[MenuItem("LLL/Tools/ColorPresetWindow",false,2)]
 	static void ColorWindow()
 	{
-		Rect windowRect=new Rect(0,0,540,350);
 		ColorWindowEditor myWindow =
-			(ColorWindowEditor) EditorWindow.GetWindowWithRect(typeof(ColorWindowEditor), windowRect, true, "Color Preset");
+			(ColorWindowEditor) EditorWindow.GetWindow(typeof(ColorWindowEditor),true,"Color Preset");
 		myWindow.Show();
 	}
 

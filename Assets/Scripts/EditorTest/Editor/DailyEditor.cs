@@ -122,10 +122,10 @@ public class DailyEditor
 //		}
 //	}
 
-	[MenuItem("LLL/Restart %#n")]
-	static void OpenOtherItem()
-	{
-//		EditorApplication.OpenProject(Application.dataPath+"/../");
-		EditorApplication.ExecuteMenuItem("Window/Editor Tests Runner");
-	}
+//	[MenuItem("LLL/Restart %#n")]
+//	static void OpenOtherItem()
+//	{
+////		EditorApplication.OpenProject(Application.dataPath+"/../");
+//		EditorApplication.ExecuteMenuItem("Window/Editor Tests Runner");
+//	}
 }
