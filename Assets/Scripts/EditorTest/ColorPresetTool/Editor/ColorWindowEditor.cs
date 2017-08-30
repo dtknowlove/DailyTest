@@ -28,7 +28,7 @@ public class ColorWindowEditor : EditorWindow
 	[MenuItem("LLL/Tool/ColorPresetWindow",false,2)]
 	static void ColorWindow()
 	{
-		Rect windowRect=new Rect(0,0,500,300);
+		Rect windowRect=new Rect(0,0,540,350);
 		ColorWindowEditor myWindow =
 			(ColorWindowEditor) EditorWindow.GetWindowWithRect(typeof(ColorWindowEditor), windowRect, true, "Color Preset");
 		myWindow.Show();
@@ -51,7 +51,12 @@ public class ColorWindowEditor : EditorWindow
 		GUILayout.Space(10);
 
 		//name
+		EditorGUILayout.BeginHorizontal();
+		GUILayout.Space(10);
+		EditorGUILayout.LabelField("Preset Name:",GUILayout.Width(75));
 		colorName = EditorGUILayout.TextField(colorName, GUILayout.Width(100));
+		EditorGUILayout.EndHorizontal();
+		GUILayout.Space(10);
 		//show
 		if (cDataList.Count > 0)
 		{
@@ -82,8 +87,11 @@ public class ColorWindowEditor : EditorWindow
 	void AddItem(ColorData c)
 	{
 		EditorGUILayout.BeginHorizontal();
+		GUILayout.Space(10);
+		EditorGUILayout.LabelField("Name:",GUILayout.Width(40));
 		c.name = EditorGUILayout.TextField(c.name,GUILayout.Width(100));
-		c.color = EditorGUILayout.ColorField("",c.color,GUILayout.Width(300));
+		EditorGUILayout.LabelField("Value:",GUILayout.Width(40));
+		c.color = EditorGUILayout.ColorField("",c.color,GUILayout.Width(250));
 		if (GUILayout.Button("delete",GUILayout.Width(70),GUILayout.Height(20)))
 		{
 			if (cDataList.Contains(c))
