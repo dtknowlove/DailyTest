@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditorInternal;
 
 public class DailyEditor
 {
@@ -11,6 +12,7 @@ public class DailyEditor
 	[MenuItem ("LLL/Merge Collider")]
 	static void MergeCollider () 
 	{
+//		InternalEditorUtility
 		Transform parent = 	Selection.activeGameObject.transform;
 		Vector3 postion = parent.position;
 		Quaternion rotation = parent.rotation;

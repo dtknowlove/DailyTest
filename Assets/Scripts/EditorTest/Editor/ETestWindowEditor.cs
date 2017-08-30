@@ -13,7 +13,7 @@ public class ETestWindowEditor : EditorWindow
 	private static string mPngMetaPath="";
 	private static string mCsPath = "";
 	
-	[MenuItem("LLL/FreeStyleWindow")]
+	[MenuItem("LLL/Tool/FreeStyleWindow",false,1)]
 	static void TestWindow()
 	{
 		Rect windowRect=new Rect(0,0,500,300);
