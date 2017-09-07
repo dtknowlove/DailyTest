@@ -4,12 +4,15 @@ using UnityEditor;
 using UnityEngine;
 using System;
 using System.IO;
+using System.Xml;
 using System.Text;
 using UnityEngine.UI;
 
 public class ShortcutWindowEditor : EditorWindow
 {
 	private static string shortcutPath = "";
+	private static string shortcutSavePath="";
+	private static string tipsLabelText = "* %->commond #->shift &->ctrl _a->keyboard[A]";
 	
 	[MenuItem("LLL/Tools/ShortcutWindow _o",false,3)]
 	static void SetUpShortcutWindow()
@@ -24,9 +27,11 @@ public class ShortcutWindowEditor : EditorWindow
 	
 	void Awake()
 	{
-		ski=new ShortcutKeyItem();
-		mSkiList=new List<ShortcutKeyItem>();
 		shortcutPath = Application.dataPath + "/Tools/ShortcutKeyTool/Editor/ShortcutKeyEditor.cs";
+		shortcutSavePath = Application.dataPath + "/Tools/ShortcutKeyTool/Res/ShortcutKeyData.xml";
+		ski=new ShortcutKeyItem();
+		mSkiList = new List<ShortcutKeyItem> ();
+		mSkiList = LoadShortcutKeyFromFile (shortcutSavePath);
 	}
 
 	void OnGUI()
@@ -38,24 +43,65 @@ public class ShortcutWindowEditor : EditorWindow
 		GUILayout.Label("Shortcut Style");
 		GUI.skin.label.fontSize = 12;
 		GUILayout.Space(10);
-
-		EditorGUILayout.BeginHorizontal();
-		ski.TargetName = EditorGUILayout.TextField(ski.TargetName, GUILayout.Width(200));
-		ski.ShortKeyName = EditorGUILayout.TextField(ski.ShortKeyName, GUILayout.Width(200));
-		if(GUILayout.Button("add",GUILayout.Width(30)))
+		//tips
+		EditorGUILayout.LabelField(tipsLabelText);
+		GUILayout.Space(10);
+		//show
+		if (mSkiList!=null && mSkiList.Count > 0)
 		{
-			Debug.LogFormat("add {0} {1} {2} {3} ",ski.TargetName,ski.ShortKeyName,ski.MenuItemName,ski.FuncName);
-			if (!mSkiList.Contains(ski))
+			for (int i = 0; i < mSkiList.Count; i++)
 			{
-				mSkiList.Add(ski);
-				CreateUhortcutKeyEditorCode(shortcutPath,mSkiList);
-				mSkiList.Clear();
+				ShowItem(mSkiList[i]);
+			}
+		}
+		//button
+		EditorGUILayout.BeginHorizontal();
+		if(GUILayout.Button("add"))
+		{
+			ski=new ShortcutKeyItem("Editor1/Editor2/Editor3","#l");
+			Debug.LogFormat("add {0} {1} {2} {3} ",ski.TargetName,ski.ShortKeyName,ski.MenuItemName,ski.FuncName);
+			if(mSkiList==null)
+				mSkiList=new List<ShortcutKeyItem>();
+			mSkiList.Add(ski);
+		}
+		if (GUILayout.Button("save"))
+		{
+			//TODO: save to disk!
+			//save to script
+			SaveShortcutKey2File (shortcutSavePath,mSkiList);
+			SaveShortcutKey2EditorCode(shortcutPath,mSkiList);
+			Debug.Log("Save!");
+		}
+		EditorGUILayout.EndHorizontal();
+	}
+
+	void OnDestroy()
+	{
+		if (mSkiList != null)
+		{
+			mSkiList.Clear ();
+			mSkiList = null;
+		}
+	}
+
+	void ShowItem(ShortcutKeyItem item)
+	{
+		EditorGUILayout.BeginHorizontal();
+		EditorGUILayout.LabelField("TargetName:",GUILayout.Width(85));
+		item.TargetName = EditorGUILayout.TextField(item.TargetName, GUILayout.Width(200));
+		EditorGUILayout.LabelField("ShortcutName:",GUILayout.Width(85));
+		item.ShortKeyName = EditorGUILayout.TextField(item.ShortKeyName, GUILayout.Width(85));
+		if (GUILayout.Button("delete",GUILayout.Width(70),GUILayout.Height(20)))
+		{
+			if (mSkiList.Contains(item))
+			{
+				mSkiList.Remove(item);
 			}
 		}
 		EditorGUILayout.EndHorizontal();
 	}
 	
-	private void CreateUhortcutKeyEditorCode(string path,List<ShortcutKeyItem> skiList)
+	private void SaveShortcutKey2EditorCode(string path,List<ShortcutKeyItem> skiList)
 	{
 		Debug.Log(path);
 		string strDlg = path.Substring(path.LastIndexOf('/')+1).Split('.')[0];
@@ -72,7 +118,7 @@ public class ShortcutWindowEditor : EditorWindow
 //			strBuilder.AppendLine();
 			
 			//类名开始
-			strBuilder.AppendFormat("\tpublic class {0}", strDlg); 
+			strBuilder.AppendFormat("public class {0}", strDlg); 
 			strBuilder.AppendLine();
 			strBuilder.AppendLine("{");
 			
@@ -99,9 +145,64 @@ public class ShortcutWindowEditor : EditorWindow
 
 		Debug.Log(">>>>>>>Success Create UIPrefab Code: " + strDlg);
 	}
+
+	private void SaveShortcutKey2File(string savePath,List<ShortcutKeyItem> list)
+	{
+		FileStream fs=null;
+		if (!File.Exists (savePath))
+			fs = File.Create (savePath);
+		XmlDocument xml = new XmlDocument ();
+		XmlElement root = xml.CreateElement ("KeyData");
+		//创建子节点
+		for (int i = 0; i < list.Count; i++) 
+		{
+			Debug.Log (list [i].TargetName);
+			XmlElement element=xml.CreateElement("ShortcutKeyItem");
+			element.SetAttribute ("id", (i+1).ToString());
+			XmlElement elementChild1 = xml.CreateElement("TargetName");
+			elementChild1.InnerText = list [i].TargetName;
+			XmlElement elementChild2 = xml.CreateElement("ShortKeyName");
+			elementChild2.InnerText = list [i].ShortKeyName;
+			//把节点一层一层的添加至xml中，注意他们之间的先后顺序，这是生成XML文件的顺序
+			element.AppendChild(elementChild1);
+			element.AppendChild(elementChild2);
+			root.AppendChild(element);
+		}
+		xml.AppendChild (root);
+		xml.Save (savePath);
+	}
+
+	private List<ShortcutKeyItem> LoadShortcutKeyFromFile(string savePath)
+	{
+		if (!File.Exists (savePath))
+			return null;
+		List<ShortcutKeyItem> itemList = new List<ShortcutKeyItem> ();
+		XmlDocument xml = new XmlDocument ();
+		xml.Load (savePath);
+		Debug.Log ("lalalallalal"+typeof(ShortcutKeyItem).Name);
+		XmlNodeList xnlList = xml.SelectSingleNode ("KeyData").ChildNodes;
+		string tn = "", sn = "";
+		for (int i = 0; i < xnlList.Count; i++) 
+		{
+			XmlElement xel = xnlList [i] as XmlElement;
+			if(xel.GetAttribute("id")==(i+1).ToString())
+			{
+				foreach (XmlNode item in xel.ChildNodes) 
+				{
+					if (item.Name.Equals ("TargetName"))
+						tn = item.InnerText;
+					if (item.Name.Equals ("ShortKeyName"))
+						sn = item.InnerText;
+				}					
+				itemList.Add (new ShortcutKeyItem (tn,sn));
+			}
+
+		}
+		return itemList;
+	}
 }
 
-
+[Serializable]
 public class ShortcutKeyItem
 {
 	public string TargetName;
@@ -113,7 +214,7 @@ public class ShortcutKeyItem
 		{
 			if (string.IsNullOrEmpty(TargetName))
 				return null;
-			return TargetName.Substring(TargetName.LastIndexOf('/')+1);
+			return TargetName.Substring(TargetName.LastIndexOf('/')+1).Replace(" ","");
 		}
 	}
 
@@ -135,6 +236,8 @@ public class ShortcutKeyItem
 
 	public ShortcutKeyItem(string _targetName,string _shortcutName)
 	{
+		TargetName = "";
+		ShortKeyName = "";
 		TargetName = _targetName;
 		ShortKeyName = _shortcutName;
 	}

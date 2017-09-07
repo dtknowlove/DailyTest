@@ -1,0 +1,18 @@
+<KeyData>
+  <ShortcutKeyItem id="1">
+    <TargetName>Edit/Project Settings/Player</TargetName>
+    <ShortKeyName>_p</ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="2">
+    <TargetName>Assets/Create/Folder</TargetName>
+    <ShortKeyName>#f</ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="3">
+    <TargetName>Assets/Reveal in Finder</TargetName>
+    <ShortKeyName>#r</ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="4">
+    <TargetName>Assets/Open</TargetName>
+    <ShortKeyName>#o</ShortKeyName>
+  </ShortcutKeyItem>
+</KeyData>
