@@ -1,18 +1,92 @@
 <KeyData>
   <ShortcutKeyItem id="1">
-    <TargetName>Edit/Project Settings/Player</TargetName>
-    <ShortKeyName>_p</ShortKeyName>
+    <TargetName>File/New Scene</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
   </ShortcutKeyItem>
   <ShortcutKeyItem id="2">
-    <TargetName>Assets/Create/Folder</TargetName>
-    <ShortKeyName>#f</ShortKeyName>
+    <TargetName>File/Open Scene</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
   </ShortcutKeyItem>
   <ShortcutKeyItem id="3">
-    <TargetName>Assets/Reveal in Finder</TargetName>
-    <ShortKeyName>#r</ShortKeyName>
+    <TargetName>File/Save Scenes</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
   </ShortcutKeyItem>
   <ShortcutKeyItem id="4">
-    <TargetName>Assets/Open</TargetName>
-    <ShortKeyName>#o</ShortKeyName>
+    <TargetName>File/Save Scene as...</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="5">
+    <TargetName>File/New Project...</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="6">
+    <TargetName>File/Open Project...</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="7">
+    <TargetName>File/Save Project</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="8">
+    <TargetName>File/Build Settings...</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="9">
+    <TargetName>File/Build &amp; Run</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="10">
+    <TargetName>File/Close</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="11">
+    <TargetName>Edit/Undo</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="12">
+    <TargetName>Edit/Redo</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="13">
+    <TargetName>Edit/Cut</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="14">
+    <TargetName>Edit/Copy</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="15">
+    <TargetName>Edit/Paste</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="16">
+    <TargetName>Edit/Duplicate</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="17">
+    <TargetName>Edit/Delete</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
+  </ShortcutKeyItem>
+  <ShortcutKeyItem id="18">
+    <TargetName>Edit/Frame Selected</TargetName>
+    <ShortKeyName>
+    </ShortKeyName>
   </ShortcutKeyItem>
 </KeyData>

@@ -24,6 +24,7 @@ public class ShortcutWindowEditor : EditorWindow
 
 	private ShortcutKeyItem ski;
 	private List<ShortcutKeyItem> mSkiList;
+	private Vector2 scrollPositon;
 	
 	void Awake()
 	{
@@ -32,6 +33,7 @@ public class ShortcutWindowEditor : EditorWindow
 		ski=new ShortcutKeyItem();
 		mSkiList = new List<ShortcutKeyItem> ();
 		mSkiList = LoadShortcutKeyFromFile (shortcutSavePath);
+		scrollPositon = new Vector2(300, 500);
 	}
 
 	void OnGUI()
@@ -47,6 +49,7 @@ public class ShortcutWindowEditor : EditorWindow
 		EditorGUILayout.LabelField(tipsLabelText);
 		GUILayout.Space(10);
 		//show
+		scrollPositon =EditorGUILayout.BeginScrollView(scrollPositon);
 		if (mSkiList!=null && mSkiList.Count > 0)
 		{
 			for (int i = 0; i < mSkiList.Count; i++)
@@ -54,11 +57,12 @@ public class ShortcutWindowEditor : EditorWindow
 				ShowItem(mSkiList[i]);
 			}
 		}
+		EditorGUILayout.EndScrollView();
 		//button
 		EditorGUILayout.BeginHorizontal();
 		if(GUILayout.Button("add"))
 		{
-			ski=new ShortcutKeyItem("Editor1/Editor2/Editor3","#l");
+			ski=new ShortcutKeyItem("Editor1/Editor2/Editor3","");
 			Debug.LogFormat("add {0} {1} {2} {3} ",ski.TargetName,ski.ShortKeyName,ski.MenuItemName,ski.FuncName);
 			if(mSkiList==null)
 				mSkiList=new List<ShortcutKeyItem>();
@@ -73,6 +77,7 @@ public class ShortcutWindowEditor : EditorWindow
 			Debug.Log("Save!");
 		}
 		EditorGUILayout.EndHorizontal();
+		GUILayout.Space(10);
 	}
 
 	void OnDestroy()
@@ -224,7 +229,7 @@ public class ShortcutKeyItem
 		{
 			if (string.IsNullOrEmpty(TargetName))
 				return null;
-			return TargetName.Replace("/", "").Replace(" ","");
+			return TargetName.Replace("/", "").Replace(" ","").Replace("...","").Replace("&","");
 		}
 	}
 
