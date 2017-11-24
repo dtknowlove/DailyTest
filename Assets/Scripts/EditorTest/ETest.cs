@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,15 +21,29 @@ public class ETest : MonoBehaviour
 		set { mTexData = value; }
 	}
 
-	// Use this for initialization
+	public List<AirPort> airportLineList=new List<AirPort>();
+
 	void Start () 
 	{
 		Debug.Log(RectData);
 		Debug.Log(TexData.name);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+}
+
+[Serializable]
+public class AirPort
+{
+	public string name;
+	public List<AirPlane> planes;
+
+	public AirPort()
+	{
+		planes=new List<AirPlane>();
 	}
+}
+[Serializable]
+public class AirPlane
+{
+	public string name;
+	public string airportpark;
 }

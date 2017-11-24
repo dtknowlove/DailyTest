@@ -25,6 +25,7 @@ public class ShortcutWindowEditor : EditorWindow
 	private ShortcutKeyItem ski;
 	private List<ShortcutKeyItem> mSkiList;
 	private Vector2 scrollPositon;
+	private bool folderOut;
 	
 	void Awake()
 	{
@@ -48,16 +49,20 @@ public class ShortcutWindowEditor : EditorWindow
 		//tips
 		EditorGUILayout.LabelField(tipsLabelText);
 		GUILayout.Space(10);
-		//show
-		scrollPositon =EditorGUILayout.BeginScrollView(scrollPositon);
-		if (mSkiList!=null && mSkiList.Count > 0)
+		folderOut = EditorGUILayout.Foldout(folderOut,"File");
+		if (folderOut)
 		{
-			for (int i = 0; i < mSkiList.Count; i++)
+			//show
+			scrollPositon =EditorGUILayout.BeginScrollView(scrollPositon);
+			if (mSkiList!=null && mSkiList.Count > 0)
 			{
-				ShowItem(mSkiList[i]);
+				for (int i = 0; i < mSkiList.Count; i++)
+				{
+					ShowItem(mSkiList[i]);
+				}
 			}
+			EditorGUILayout.EndScrollView();
 		}
-		EditorGUILayout.EndScrollView();
 		//button
 		EditorGUILayout.BeginHorizontal();
 		if(GUILayout.Button("add"))
@@ -229,7 +234,7 @@ public class ShortcutKeyItem
 		{
 			if (string.IsNullOrEmpty(TargetName))
 				return null;
-			return TargetName.Replace("/", "").Replace(" ","").Replace("...","").Replace("&","");
+			return TargetName.Replace("/", "").Replace(" ","").Replace("...","").Replace("&","").Replace("#","");
 		}
 	}
 
